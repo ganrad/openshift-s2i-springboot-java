@@ -27,7 +27,7 @@ RUN yum install -y --enablerepo=centosplus \
     rm /tmp/gradle-${GRADLE_VERSION}-bin.zip && \
     mv /usr/local/gradle-${GRADLE_VERSION} /usr/local/gradle && \
     ln -sf /usr/local/gradle/bin/gradle /usr/local/bin/gradle && \
-    mkdir -p /opt/openshift && chmod -R a+rwX /opt/openshift && \
+    mkdir -p /opt/openshift && \
     mkdir -p /opt/app-root/src && chmod -R a+rwX /opt/app-root/src
 
 # Set the location of the mvn and gradle bin directories on search path
