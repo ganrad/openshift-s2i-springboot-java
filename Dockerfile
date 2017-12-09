@@ -1,4 +1,4 @@
-# springboot-s2i : 12-08-2017
+# s2i-springboot : 12-08-2017
 #
 # springboot-jdk8
 #
@@ -46,7 +46,7 @@ LABEL io.k8s.description="Platform for building Spring Boot applications with ma
 COPY ./s2i/bin/ /usr/libexec/s2i
 
 # Drop the root user and make the content of /opt/openshift owned by user 1001
-RUN chown -R 1001:1001 /opt/app-root /opt/openshift
+RUN chown -R 1001:1001 /opt/openshift
 
 # This default user is created in the openshift/base-centos7 image
 USER 1001
