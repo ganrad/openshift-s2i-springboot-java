@@ -11,7 +11,7 @@
 
 execute_maven_build()
 {
-  echo "---> Attempting Maven build ..."
+  echo "---> Building application using Maven ..."
 
   MAVEN_ARGS="package -DskipTests ${MAVEN_ARGS_APPEND}"
   echo "---> Found pom.xml.  Attempting to build with 'mvn ${MAVEN_ARGS}'"
@@ -29,19 +29,19 @@ execute_maven_build()
 
   # Copy built artifacts (if any!) from the target/ directory
   # to the $DEPLOY_DIR directory for later deployment
-  cp -rfv $HOME/target/*.* $DEPLOY_DIR 2> /dev/null
+  cp -v $HOME/target/*.* $DEPLOY_DIR 2> /dev/null
 
-  # clean up after Maven run ....
+  # Clean up after Maven run ....
   mvn clean
 
   if [ -d "$HOME/.m2/repository" ]; then
-    rm -r "$HOME/.m2/repository"
+    rm -rf "$HOME/.m2/repository"
   fi
 }
 
 execute_gradle_build()
 {
-  echo "---> Attempting Gradle build ..."
+  echo "---> Building application using Gradle ..."
 
   GRADLE_ARGS="assemble ${GRADLE_ARGS_APPEND}"
   echo "---> Found gradle.build. Attempting to build with 'gradle -s ${GRADLE_ARGS}'"
@@ -61,7 +61,7 @@ execute_gradle_build()
   # to the $DEPLOY_DIR directory for later deployment
   cp -v $HOME/build/libs/*.* $DEPLOY_DIR 2> /dev/null
 
-  # clean up after Gradle run ....
+  # Clean up after Gradle run ....
   gradle clean
 
   if [ -d "$HOME/.gradle/caches" ]; then
@@ -75,14 +75,14 @@ if [ "$1" = "-h" ]; then
   exec /usr/libexec/s2i/usage
 fi
 
-echo "---> Starting Java web application build process ..."
-echo "---> Application source directory is set to $HOME ..."
-
 # Restore artifacts from the previous build (if they exist).
 if [ "$(ls /tmp/artifacts/ 2>/dev/null)" ]; then
   echo "---> Restoring build artifacts"
   mv /tmp/artifacts/. ./
 fi
+
+echo "---> Starting Java web application build process ..."
+echo "---> Application source directory is set to $HOME ..."
  
 DEPLOY_DIR=/opt/openshift
 echo "---> Set target directory to $DEPLOY_DIR ..."
@@ -98,14 +98,14 @@ elif [ $BUILD_TYPE = "Gradle" ] && [ -f "$HOME/build.gradle" ]; then
   execute_gradle_build
 else
   # Copy the fat jar to the deployment directory
-  cp -v $HOME/*.jar $DEPLOY_DIR
+  cp -v $HOME/*.jar $DEPLOY_DIR 2> /dev/null
 fi
 
-# For Springboot, there should only have 1 fat jar
-if [ $(ls /opt/openshift/*.jar | wc -l) -eq 1 ]; then
-  mv /opt/openshift/*.jar /opt/openshift/app.jar
-  [ ! -f /opt/openshift/app.jar ] && echo "Application could not be properly built." && exit 1 
-  echo "---> Application deployed successfully.  jar file is located in /opt/openshift/app.jar"
+# For Spring Boot, there should only be 1 fat jar
+if [ $(ls $DEPLOY_DIR/*.jar | wc -l) -eq 1 ]; then
+  mv $DEPLOY_DIR/*.jar $DEPLOY_DIR/app.jar
+  [ ! -f $DEPLOY_DIR/app.jar ] && echo "Application could not be properly built." && exit 1 
+  echo "---> Application deployed successfully.  jar file is located in $DEPLOY_DIR/app.jar"
 else
   exit 1
 fi
