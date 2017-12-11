@@ -36,7 +36,7 @@ The *run* script is used to start/run the Spring Boot application.
 The *save-artifacts* script allows a new build to reuse content (dependencies) from a previous version of the application image.
 
 ##### usage (optional) 
-The *usage* script prints out instructions on how to use the Spring Boot Java S2I builder image in order to produce an **application container image**.
+The *usage* script prints out instructions on how to use the Spring Boot Java S2I builder image in order to produce an **Application Container Image**.
 
 #### Create the Spring Boot Application S2I builder image
 The following command will create a S2I builder image named **springboot-java** based on the Dockerfile.
@@ -53,9 +53,9 @@ docker build -t springboot-java-candidate .
 IMAGE_NAME=springboot-java-candidate test/run
 ```
 
-#### Creating the Application Container Image
-The application container image contains the built application binary which is layered on top of the builder (base) image.
-The following command will create the application container image:
+#### Creating the *Application Container Image*
+The application container image contains the built application binary which is layered on top of the builder (base) image.  The following command will create the application container image:
+
 **Usage:**
 ```
 s2i build <location of source code> <S2I builder image name> <application container image name>
@@ -65,14 +65,14 @@ s2i build <location of source code> <S2I builder image name> <application contai
 s2i build test/test-app springboot-java po-service-app
 ---> Building and installing application from source...
 ```
-Based on the logic defined in the *assemble* script, s2i will create an application container image using the supplied S2I builder image as a base image and the application source code from the *test/test-app* directory. 
+Based on the logic defined in the *assemble* script, s2i will create an application container image using the supplied S2I builder image and the application source code from the *test/test-app* directory. 
 
 #### Running the application container image
 Running the application image is as simple as invoking the docker run command:
 ```
 docker run -d -p 8080:8080 po-service-app
 ```
-The application, should now be accessible at  [http://localhost:8080](http://localhost:8080).
+The application *po-service-app*, should now be accessible at  [http://localhost:8080](http://localhost:8080).
 
 #### Using the saved artifacts script
 Rebuilding the application using the saved artifacts can be accomplished using the following command:
@@ -99,8 +99,9 @@ oc create -f s2i-springboot.json
 
 3.  Click on 'Add to Project' in OpenShift CP Web Console (UI) to create a new application and then select the 'springboot-java' template from the 'Browse' images tab.  You will then be presented with a form where you can specify 
 * A *name* for your web application and 
-* The GitHub repository URL containing your Java web application source code.
-* Specify the application build type - Maven (Default) or Gradle.
+* The GitHub repository URL containing your Spring Boot Java application source code.
+* (Optional) Specify the application build type - Maven (Default) or Gradle.
+* (Optional) Specify application runtime arguments.
 
     Next, click on 'Create' application.  This will invoke the *S2I process* which will build your application, containerize your application (as explained above), push the newly built image into the integrated docker registry and finally deploy a Pod containing your application.
 
