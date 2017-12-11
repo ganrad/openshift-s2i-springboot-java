@@ -2,7 +2,7 @@
   "apiVersion": "v1",
   "kind": "Template",
   "metadata": {
-    "name": "s2i-springboot"
+    "name": "springboot-java"
   },
   "parameters": [
     {
@@ -14,7 +14,7 @@
     {
       "name": "GIT_URI",
       "displayName": "Git Repository containing application source code",
-      "description": "GIT URL pointing to the repository containing application source code for Java Web Application",
+      "description": "GIT URL pointing to the repository containing application source code for Java Spring Boot Application",
       "value": "https://github.com/ganrad/YourProject.git"
     },
     {
@@ -41,6 +41,11 @@
       "name": "GRADLE_ARGS_APPEND",
       "displayName": "Gradle arguments to append",
       "description": "Append Gradle arguments"
+    },
+    {
+      "name": "APP_OPTIONS",
+      "displayName": "Application arguments",
+      "description": "Arguments to be passed to the Springboot application (at runtime)"
     }
   ],
   "objects": [
@@ -106,7 +111,7 @@
           "sourceStrategy": {
             "from": {
               "kind": "ImageStreamTag",
-	      "name": "s2i-springboot:latest"
+	      "name": "springboot-java:latest"
             },
 	    "env": [
 		{
