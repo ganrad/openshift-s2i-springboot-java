@@ -35,7 +35,7 @@ execute_maven_build()
   mvn clean
 
   if [ -d "$HOME/.m2/repository" ]; then
-    rm -rf "$HOME/.m2/repository"
+    rm -rf $HOME/.m2/repository
   fi
 }
 
@@ -65,7 +65,7 @@ execute_gradle_build()
   gradle clean
 
   if [ -d "$HOME/.gradle/caches" ]; then
-    rm -rf "$HOME/.gradle/caches"
+    rm -rf $HOME/.gradle/caches
   fi
 }
 
