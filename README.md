@@ -2,6 +2,9 @@
 
 ## A. Creating the S2I builder image and testing it.
 
+**NOTE:**
+If you only want to use this S2I builder image to build and deploy your Spring Boot Java Application, then you can skip this step and go to Step [B].
+
 ### Files and Directories  
 | File                   | Required? | Description                                                  |
 |------------------------|-----------|--------------------------------------------------------------|
