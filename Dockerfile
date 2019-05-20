@@ -23,20 +23,21 @@ RUN yum -y update; \
     yum clean all -y
 
 # Install OpenJDK 1.8, create required directories.
-RUN yum install -y java-1.8.0-openjdk java-1.8.0-openjdk-devel && \
+ENV JAVA_VERSION 1.8.0
+RUN yum install -y java-$JAVA_VERSION-openjdk java-$JAVA_VERSION-openjdk-devel && \
     yum clean all -y && \
     mkdir -p /opt/openshift
 
-# Install Maven 3.5.2
-ENV MAVEN_VERSION 3.5.2
+# Install Maven 3.6.1
+ENV MAVEN_VERSION 3.6.1
 RUN (curl -fSL https://www-eu.apache.org/dist/maven/maven-3/$MAVEN_VERSION/binaries/apache-maven-$MAVEN_VERSION-bin.tar.gz | \
     tar -zx -C /usr/local) && \
     mv /usr/local/apache-maven-$MAVEN_VERSION /usr/local/maven && \
     ln -sf /usr/local/maven/bin/mvn /usr/local/bin/mvn && \
     mkdir -p $HOME/.m2 && chmod -R a+rwX $HOME/.m2
 
-# Install Gradle 4.4
-ENV GRADLE_VERSION 4.4
+# Install Gradle 5.4
+ENV GRADLE_VERSION 5.4
 RUN curl -fSL https://services.gradle.org/distributions/gradle-$GRADLE_VERSION-bin.zip -o /tmp/gradle-$GRADLE_VERSION-bin.zip && \
     unzip /tmp/gradle-$GRADLE_VERSION-bin.zip -d /usr/local/ && \
     rm /tmp/gradle-$GRADLE_VERSION-bin.zip && \
