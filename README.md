@@ -47,7 +47,7 @@ The following command will create a S2I builder image named **springboot-java** 
 You can override Maven and Gradle version in case the older ones don't exsist or you want the latest ones.
 
 ```
-docker build --build-arg MAVEN_VER=3.6.1 --build-arg GRADLE_VER=4.4 -t springboot-java .
+docker build --build-arg MAVEN_VER=3.6.3 --build-arg GRADLE_VER=4.4 -t springboot-java .
 ```
 
 The command *'s2i usage springboot-java'* will print out the help info. defined in the *usage* script.
@@ -55,7 +55,7 @@ The command *'s2i usage springboot-java'* will print out the help info. defined 
 #### Testing the S2I builder image
 The builder image can be tested using the following commands:
 ```
-docker build --build-arg MAVEN_VER=3.6.1 --build-arg GRADLE_VER=4.4 -t springboot-java-candidate .
+docker build --build-arg MAVEN_VER=3.6.3 --build-arg GRADLE_VER=4.4 -t springboot-java-candidate .
 IMAGE_NAME=springboot-java-candidate test/run
 ```
 
